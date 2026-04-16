@@ -1,0 +1,68 @@
+# Docker Compose для Railway (опционально)
+# Используется для локальной разработки или разделения сервисов
+
+version: '3.8'
+
+services:
+  # Веб-приложение (WebApp)
+  webapp:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ved_calendar
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - DEBUG=False
+    depends_on:
+      - db
+    command: python webapp/main.py
+    restart: unless-stopped
+
+  # Админ-панель
+  admin:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ved_calendar
+      - ADMIN_PORT=8001
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - DEBUG=False
+    depends_on:
+      - db
+    command: python admin/main.py
+    restart: unless-stopped
+
+  # Telegram бот
+  bot:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ved_calendar
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ADMIN_IDS=${TELEGRAM_ADMIN_IDS}
+      - DEBUG=False
+    depends_on:
+      - db
+    command: python bot/main.py
+    restart: unless-stopped
+
+  # База данных PostgreSQL
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=ved_calendar
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
