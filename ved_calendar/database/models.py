@@ -173,5 +173,5 @@ async def init_db():
 def get_sync_engine():
     """Получить синхронный движок для миграций"""
     from sqlalchemy import create_engine
-    url = settings.DATABASE_URL.replace("sqlite+aiosqlite", "sqlite").replace("postgresql+psycopg2", "postgresql")
+    url = settings.DATABASE_URL.replace("sqlite+aiosqlite", "sqlite").replace("postgresql+psycopg2", "postgresql").replace("postgresql+asyncpg", "postgresql")
     return create_engine(url, echo=settings.DEBUG)

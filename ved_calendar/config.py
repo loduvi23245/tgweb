@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Optional
 
 
 load_dotenv()
@@ -14,26 +14,30 @@ class Settings(BaseSettings):
     
     # Web Application Configuration
     WEBAPP_HOST: str = "0.0.0.0"
-    WEBAPP_PORT: int = 8000
-    WEBAPP_URL: str = "https://localhost:8000"
+    WEBAPP_PORT: int = int(os.getenv("PORT", "8000"))  # Railway использует PORT
+    WEBAPP_URL: str = os.getenv("RAILWAY_PUBLIC_URL", "https://localhost:8000")
     
     # Admin Panel Configuration
     ADMIN_HOST: str = "0.0.0.0"
-    ADMIN_PORT: int = 8001
-    ADMIN_SECRET_KEY: str = "change_this_secret_key"
-    ADMIN_USERNAME: str = "admin"
-    ADMIN_PASSWORD: str = "admin"
+    ADMIN_PORT: int = int(os.getenv("ADMIN_PORT", "8001"))
+    ADMIN_SECRET_KEY: str = os.getenv("ADMIN_SECRET_KEY", "change_this_secret_key")
+    ADMIN_USERNAME: str = os.getenv("ADMIN_USERNAME", "admin")
+    ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "admin")
     
     # Database Configuration
-    DATABASE_URL: str = "sqlite+aiosqlite:///./ved_calendar.db"
+    # Railway предоставляет DATABASE_URL для PostgreSQL
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL", 
+        "sqlite+aiosqlite:///./ved_calendar.db"
+    )
     
     # Security
-    JWT_SECRET_KEY: str = "change_this_jwt_secret"
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "change_this_jwt_secret")
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # Application Settings
-    DEBUG: bool = True
+    DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
     TIMEZONE: str = "Europe/Moscow"
     EVENTS_PER_PAGE: int = 20
     CACHE_EXPIRE_HOURS: int = 1
