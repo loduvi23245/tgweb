@@ -77,7 +77,8 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
         "webapp.main:app",
-        host=settings.WEBAPP_HOST,
-        port=settings.WEBAPP_PORT,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8000))
+
         reload=settings.DEBUG
     )
