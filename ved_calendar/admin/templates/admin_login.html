@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Админ-панель ВЭД-календарь</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .input-field {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .login-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .login-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .login-button:active {
+            transform: translateY(0);
+        }
+        
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="text-center">
+            <div class="logo-icon">🔐</div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Админ-панель</h1>
+            <p class="text-gray-600 mb-8">ВЭД-календарь</p>
+        </div>
+        
+        <form action="/admin/token" method="POST">
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">
+                    Имя пользователя
+                </label>
+                <input 
+                    type="text" 
+                    name="username" 
+                    required
+                    class="input-field w-full"
+                    placeholder="Введите имя пользователя"
+                >
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">
+                    Пароль
+                </label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    required
+                    class="input-field w-full"
+                    placeholder="Введите пароль"
+                >
+            </div>
+            
+            <button type="submit" class="login-button">
+                Войти
+            </button>
+        </form>
+        
+        <div class="mt-6 text-center text-sm text-gray-500">
+            <p>© 2025 ВЭД-календарь. Все права защищены.</p>
+        </div>
+    </div>
+</body>
+</html>
