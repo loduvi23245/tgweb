@@ -9,8 +9,8 @@ load_dotenv()
 
 class Settings(BaseSettings):
     # Telegram Bot Configuration
-    TELEGRAM_BOT_TOKEN: str = ""
-    TELEGRAM_ADMIN_IDS: str = ""
+    TELEGRAM_BOT_TOKEN: str = "8724315624:AAGDeWqWNkCDesrAOrcasN5KFRfVNi6dHVI"
+    TELEGRAM_ADMIN_IDS: str = "596782507"
     
     # Web Application Configuration
     WEBAPP_HOST: str = "0.0.0.0"
